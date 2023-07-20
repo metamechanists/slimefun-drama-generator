@@ -69,19 +69,10 @@ function renderDrama(message, share, sharePath, teaser) {
         <h1>${message}</h1>
         <span id="fight"></span>
         <h6>
-            <a id="more" href="/">Generate more drama!</a> (or press enter)
+            <a id="more" href="/">Generate more drama</a> (or press enter)
             <br />
             <br />
-            This website is made in jest - don't take it too seriously!
-            <br />
-            Developed by mdcfe; PRs welcome on <a href="https://github.com/mdcfe/spigot-drama-generator">GitHub</a>.
-            <br />
-            Inspired by (and heavily borrows from) <a href="https://github.com/asiekierka/MinecraftDramaGenerator/">asiekierka's Minecraft Drama Generator</a>.
-            <br />
-            <br />
-            <i>Unofficial alternative forms: <a href="https://api.chew.pro/spigotdrama">Chew's JSON API</a> | <a href="https://twitter.com/SpigotDrama">Twitter bot</a></i>
-            <br />
-            <a href="https://syscraft.org/">Long live Syscraft!</a>
+            <a href="https://github.com/metamechanists/slimefun-drama-generator">Source code on GitHub</a>
         </h6>
     </body>
 </html>
