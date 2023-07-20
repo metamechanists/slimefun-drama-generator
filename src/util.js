@@ -1,7 +1,12 @@
-export function randomIndex(array) {
+function randomIndex(array) {
     return Math.floor(Math.random() * array.length);
 }
 
-export function randomEntry(array) {
+function randomEntry(array) {
     return array[randomIndex(array)];
 }
+
+module.exports = {
+  randomIndex,
+  randomEntry,
+};

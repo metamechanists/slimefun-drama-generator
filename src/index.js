@@ -1,3 +1,4 @@
+const http = require('http');
 const { randomIndex, randomEntry } = require("./util");
 const { combinations, sentences, social } = require("./data.json");
 
@@ -96,15 +97,15 @@ function handleRoot(url) {
         drama[key] = [randomIndex(combinations[key]), randomIndex(combinations[key]), randomIndex(combinations[key]), randomIndex(combinations[key])];
     }
 
-    const dramaUrl = btoa(JSON.stringify(drama));
-    const host = url.host == "example.com" ? "localhost:8787" : url.host;
+    const dramaUrl = Buffer.from(JSON.stringify(drama)).toString('base64');
+    const host = url.host == "example.com" ? "localhost:6969" : url.host;
 
     return handleDrama(new URL(`${url.protocol}//${host}/${dramaUrl}`));
 }
 
 function handleDrama(url) {
     try {
-        let dramaIds = JSON.parse(atob(url.pathname.split("/")[1]));
+        let dramaIds = JSON.parse(Buffer.from(url.pathname.split("/")[1], 'base64').toString('utf-8'));
         let usedDramaIds = { sentence: dramaIds.sentence };
         let message = sentences[dramaIds.sentence];
 
@@ -121,40 +122,45 @@ function handleDrama(url) {
             }
         }
 
-        url.pathname = "/" + btoa(JSON.stringify(usedDramaIds));
+        url.pathname = "/" + Buffer.from(JSON.stringify(usedDramaIds)).toString('base64');
 
         let teaser = randomEntry(social);
 
-        return new Response(renderDrama(message, url.href, url.pathname, teaser), {
-            headers: {
-                "content-type": "text/html;charset=utf8"
-            }
-        });
+        return renderDrama(message, url.href, url.pathname, teaser);
     } catch (error) {
         return handle404();
     }
 }
 
 function handle404() {
-    return new Response("no u", {
-        status: "404"
-    });
+    return "no u";
 }
 
-addEventListener('fetch', event => {
-    event.respondWith(handleRequest(event.request))
-})
 /**
  * Respond with hello worker text
  * @param {Request} request
  */
-async function handleRequest(request) {
-    let url = new URL(request.url);
-    if (url.pathname == "/") {
-        return handleRoot(url);
-    } else if (url.pathname == "/favicon.ico") {
-        return handle404();
-    } else {
-        return handleDrama(url);
-    }
+function handleRequest(req, res) {
+  let url = new URL(`http://${req.headers.host}${req.url}`);
+  let response;
+
+  if (url.pathname == "/") {
+    response = handleRoot(url);
+  } else if (url.pathname == "/favicon.ico") {
+    response = handle404();
+  } else {
+    response = handleDrama(url);
+  }
+
+  
+
+  res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
+  res.end(response);
 }
+
+const server = http.createServer(handleRequest);
+const port = 6969;
+
+server.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
