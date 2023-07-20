@@ -6,14 +6,14 @@ function renderDrama(message, share, sharePath, teaser) {
     return `
 <html>
     <head>
-        <title>Spigot Drama Generator</title>
+        <title>Slimefun Drama Generator</title>
         <meta name="description" content="${message}" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <meta name="og:title" content="${teaser}"/>
         <meta name="og:type" content="website"/>
         <meta name="og:url" content="${share}"/>
-        <meta name="og:site_name" content="Spigot Drama Generator"/>
+        <meta name="og:site_name" content="Slimefun Drama Generator"/>
         <meta name="og:description" content="${message}"/>
 
         <link rel="icon" href="data:,">
@@ -65,7 +65,7 @@ function renderDrama(message, share, sharePath, teaser) {
         </script>
     </head>
     <body>
-        <h3>Spigot Drama Generator</h3>
+        <h3>Slimefun Drama Generator</h3>
         <h1>${message}</h1>
         <span id="fight"></span>
         <h6>
